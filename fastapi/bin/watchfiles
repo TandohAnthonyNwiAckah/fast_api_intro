@@ -1,6 +1,4 @@
-#!/bin/sh
-'''exec' "/Users/tandoh/Desktop/FAST API/fastapi/bin/python3.12" "$0" "$@"
-' '''
+#!/Users/tandoh/Desktop/fastapi/fastapi/bin/python3.12
 # -*- coding: utf-8 -*-
 import re
 import sys
