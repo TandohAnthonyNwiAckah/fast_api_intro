@@ -18,7 +18,8 @@ dependencies are isolated from your system-wide Python installation.
 
 ### Step 1: Create the Virtual Environment
 
-Run the following command to create a virtual environment named `fastapi`:
+Run the following command to create a virtual environment named `fastapi`.
+You can use any name for your virtual environment.
 
 ```bash
 python -m venv fastapi
@@ -51,4 +52,20 @@ You can deactivate the virtual environment by typing the command below.
 
 ```bash
 deactivate
+```
+
+
+## Installing FastApi
+Once your virtual environment is activated, you can
+install FastAPI.
+
+```bash
+pip install fastapi
+```
+
+
+## Installing Uvicorn
+
+```bash
+pip install 'uvicorn[standard]'
 ```
