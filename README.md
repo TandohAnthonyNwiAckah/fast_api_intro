@@ -55,6 +55,7 @@ deactivate
 ```
 
 ## Installing FastApi
+
 Once your virtual environment is activated, you can
 install FastAPI.
 
@@ -62,13 +63,11 @@ install FastAPI.
 pip install fastapi
 ```
 
-
 ## Installing Uvicorn
 
 ```bash
 pip install 'uvicorn[standard]'
 ```
-
 
 ## Running a FastAPI Application
 
@@ -80,15 +79,23 @@ from fastapi import FastAPI
 
 app = FastAPI()
 
+
 @app.get("/")
-def read_root():
+async def read_root():
     return {"message": "Hello World !! Welcome to the FAST API"}
 
 ```
-
 
 ## Running the FastAPI Application
 
 ```bash
 uvicorn hello_world:app --reload
 ```
+
+
+
+
+
+
+
+
