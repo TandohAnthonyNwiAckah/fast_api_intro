@@ -30,9 +30,21 @@ class BookRequest(BaseModel):
     rating: int = Field(gt=0, lt=6)
     published_date: int = Field(gt=1999, lt=2031)
 
+    model_config = {
+        "json_schema_extra": {
+            "example": {
+                "title": "A new book",
+                "author": "Tony",
+                "description": "A new description of a book",
+                "rating": 5,
+                'published_date': 2029
+            }
+        }
+    }
+
 
 BOOKS = [
-    Book(1, 'PYTHON', 'Tanacom', 'A very nice book!', 5, 2028),
+    Book(1, 'PYTHON', 'Tanacom', 'A very nice book!', 5, 2024),
     Book(2, 'KOTLIN', 'Tanacom', 'A great book!', 4, 2025),
     Book(3, 'C++', 'Tanacom', 'A awesome book!', 4, 2026),
     Book(4, 'JAVA', 'Tony', 'Book Description', 5, 2027),
@@ -56,3 +68,36 @@ async def create_book(book_request: BookRequest):
 def find_book_id(book: Book):
     book.id = 1 if len(BOOKS) == 0 else BOOKS[-1].id + 1
     return book
+
+
+@app.get("/books/")
+async def read_book_by_rating(book_rating: int):
+    books_to_return = []
+    for book in BOOKS:
+        if book.rating == book_rating:
+            books_to_return.append(book)
+    return books_to_return
+
+
+@app.get("/books/publish/")
+async def read_books_by_publish_date(published_date: int):
+    books_to_return = []
+    for book in BOOKS:
+        if book.published_date == published_date:
+            books_to_return.append(book)
+    return books_to_return
+
+
+@app.put("/books/update_book")
+async def update_book(book: BookRequest):
+    for i in range(len(BOOKS)):
+        if BOOKS[i].id == book.id:
+            BOOKS[i] = book
+
+
+@app.delete("/books/{book_id}")
+async def delete_book(book_id: int):
+    for i in range(len(BOOKS)):
+        if BOOKS[i].id == book_id:
+            BOOKS.pop(i)
+            break
