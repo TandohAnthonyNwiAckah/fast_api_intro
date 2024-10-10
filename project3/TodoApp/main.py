@@ -6,10 +6,13 @@ import models
 from database import engine, SessionLocal
 from models import Todos
 from pydantic import BaseModel, Field
+from routers import auth
 
 app = FastAPI()
 
 models.Base.metadata.create_all(bind=engine)
+
+app.include_router(auth.router)
 
 
 def get_db():
@@ -88,5 +91,3 @@ async def delete_todo(db: db_dependency, todo_id: int = Path(gt=0)):
         db.commit()
         return
     raise HTTPException(status_code=404, detail='Todo not found')
-
-
