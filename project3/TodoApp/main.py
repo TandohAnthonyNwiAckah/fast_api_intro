@@ -41,7 +41,6 @@ class TodoRequest(BaseModel):
 async def read_all(db: db_dependency):
     return db.query(Todos).all()
 
-
 @app.get("/todo/{todo_id}", status_code=status.HTTP_200_OK)
 async def read_todo(db: db_dependency, todo_id: int = Path(gt=0)):
     todo_model = db.query(Todos).filter(Todos.id == todo_id).first()
