@@ -11,6 +11,8 @@ type hints. It is designed to be easy to use, allowing developers to build and d
 - **Asynchronous support**: Native support for asynchronous programming with Python's async/await syntax.
 - **Automatic interactive API documentation**: With Swagger UI and ReDoc.
 
+![FastAPI Swagger UI](screenshot/s1.png)
+
 ## Installing a Virtual Environment Called `fastapi`
 
 To start using FastAPI, it's a good practice to create a virtual environment. This ensures that your project
@@ -92,7 +94,32 @@ async def read_root():
 uvicorn hello_world:app --reload
 ```
 
+## Swagger UI Documentation
 
+FastAPI provides an interactive API documentation via Swagger UI.
+It allows you to test the API endpoints directly from the browser.
+
+- Open your browser and navigate to:
+
+```bash
+http://127.0.0.1:8000/docs
+```
+
+You will see a Swagger UI interface showing the available endpoints and methods. You can interact with the API by
+sending requests directly from this interface.
+
+## ReDoc Documentation
+
+In addition to Swagger UI, FastAPI automatically generates documentation with ReDoc, which provides a more minimal and
+clean layout.
+
+- To access the ReDoc interface, navigate to:
+
+```bash
+http://127.0.0.1:8000/redoc
+```
+
+ReDoc is another API documentation tool that displays all the available endpoints in a more structured manner.
 
 
 
