@@ -28,6 +28,17 @@ class TodoRequest(BaseModel):
     priority: int = Field(gt=0, lt=6)
     complete: bool
 
+    model_config = {
+        "json_schema_extra": {
+            "example": {
+                "title": "Buy Milk",
+                "description": "Buy 1 liter of milk",
+                "priority": 2,
+                "complete": False
+            }
+        }
+    }
+
 
 @router.get("/", status_code=status.HTTP_200_OK)
 async def read_all(user: user_dependency, db: db_dependency):
