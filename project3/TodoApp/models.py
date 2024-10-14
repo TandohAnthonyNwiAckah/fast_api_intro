@@ -15,6 +15,7 @@ class Users(Base):
     role = Column(String)
 
 
+
 class Todos(Base):
     __tablename__ = 'todos'
 
