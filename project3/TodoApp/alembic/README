@@ -3,3 +3,6 @@ Generic single-database configuration.
 - pip install alembic
 
 - alembic init alembic
+
+
+- alembic revision -m "update table"
