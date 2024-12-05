@@ -2,7 +2,10 @@ Generic single-database configuration.
 
 - pip install alembic
 
-- alembic init alembic
+- alembic init alembic_folder_name
 
+- alembic revision -m "Create phone number column on users table"
 
-- alembic revision -m "update table"
+- alembic upgrade revision_id
+
+- alembic downgrade -1
