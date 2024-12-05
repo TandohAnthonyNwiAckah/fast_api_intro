@@ -22,10 +22,10 @@ bcrypt_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 oauth2_bearer = OAuth2PasswordBearer(tokenUrl='auth/token')
 
-
 class CreateUserRequest(BaseModel):
     username: str
     email: str
+    phone_number: str
     first_name: str
     last_name: str
     password: str
@@ -36,6 +36,7 @@ class CreateUserRequest(BaseModel):
             "example": {
                 "username": "JohnDoe",
                 "email": "john.doe@email.com",
+                "phone_number": "+233504305596",
                 "first_name": "John",
                 "last_name": "Doe",
                 "password": "password123",
@@ -44,11 +45,9 @@ class CreateUserRequest(BaseModel):
         }
     }
 
-
 class Token(BaseModel):
     access_token: str
     token_type: str
-
 
 def get_db():
     db = SessionLocal()
@@ -57,9 +56,7 @@ def get_db():
     finally:
         db.close()
 
-
 db_dependency = Annotated[Session, Depends(get_db)]
-
 
 def authenticate_user(username: str, password: str, db):
     user = db.query(Users).filter(Users.username == username).first()
@@ -68,7 +65,6 @@ def authenticate_user(username: str, password: str, db):
     if not bcrypt_context.verify(password, user.hashed_password):
         return False
     return user
-
 
 async def get_current_user(token: Annotated[str, Depends(oauth2_bearer)]):
     try:
@@ -84,18 +80,17 @@ async def get_current_user(token: Annotated[str, Depends(oauth2_bearer)]):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
                             detail='Could not validate user.')
 
-
 def create_access_token(username: str, user_id: int, role: str, expires_delta: timedelta):
     encode = {'sub': username, 'id': user_id, 'role': role}
     expires = datetime.now(timezone.utc) + expires_delta
     encode.update({'exp': expires})
     return jwt.encode(encode, SECRET_KEY, algorithm=ALGORITHM)
 
-
 @router.post("/", status_code=status.HTTP_201_CREATED)
 async def create_user(db: db_dependency, create_user_request: CreateUserRequest):
     create_user_model = Users(
         email=create_user_request.email,
+        phone_number=create_user_request.phone_number,
         username=create_user_request.username,
         first_name=create_user_request.first_name,
         last_name=create_user_request.last_name,
@@ -107,7 +102,6 @@ async def create_user(db: db_dependency, create_user_request: CreateUserRequest)
     db.commit()
 
     # return create_user_model
-
 
 @router.post("/token", response_model=Token)
 async def login_for_access_token(form_data: Annotated[OAuth2PasswordRequestForm, Depends()],

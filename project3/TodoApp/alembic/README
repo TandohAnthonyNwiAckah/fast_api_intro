@@ -1,4 +1,8 @@
-Generic single-database configuration.
+# ALEMBIC
+
+Alembic is a lightweight database migration tool for SQLAlchemy.
+
+Database migration tool tansfer and upgrade resources within a database.
 
 - pip install alembic
 
