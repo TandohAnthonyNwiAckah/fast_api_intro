@@ -58,7 +58,7 @@ def test_todo():
 
 
 def test_read_all_authenticated(test_todo):
-    response = client.get("/")
+    response = client.get("/todos")
     assert response.status_code == 200
     assert response.json() == [
         {'complete': False, 'title': 'Hello World', 'description': 'Welcome to FAST API', 'priority': 5,
@@ -67,15 +67,13 @@ def test_read_all_authenticated(test_todo):
 
 
 def test_read_one_authenticated(test_todo):
-    response = client.get("/todo/1")
+    response = client.get("/todos/todo/1")
     assert response.status_code == status.HTTP_200_OK
     assert response.json() == {'complete': False, 'title': 'Hello World', 'priority': 5,
                                'description': 'Welcome to FAST API', 'id': 1,
                                'owner_id': 1}
 
-
-
 def test_read_one_authenticated_not_found():
-    response = client.get("/todo/999")
+    response = client.get("/todos/todo/999")
     assert response.status_code == 404
     assert response.json() == {'detail': 'Todo not found.'}
